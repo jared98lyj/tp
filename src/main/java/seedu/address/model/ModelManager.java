@@ -22,9 +22,11 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private final AppointmentList appointmentList;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the given addressBook and userPrefs, and empty
+     * appointment list.
      */
     public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs) {
         super();
@@ -34,6 +36,7 @@ public class ModelManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
+        this.appointmentList = new AppointmentList();
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
 
@@ -127,6 +130,41 @@ public class ModelManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    /**
+     * Checks if Appointment exists in appointment list.
+     * @param appointment Appointment to check
+     * @return True if appointment is already in appointment list
+     */
+    @Override
+    public boolean hasAppointment(Appointment appointment) {
+        return appointmentList.contains(appointment);
+    }
+
+    /**
+     * @param appointment Appointment to add (appointment must not already exist)
+     */
+    @Override
+    public void addAppointment(Appointment appointment) {
+        appointmentList.add(appointment);
+    }
+
+    /**
+     * Removes appointment from appointment list.
+     * @param appointment Appointment to remove must be present
+     */
+    @Override
+    public void removeAppointment(Appointment appointment) {
+        appointmentList.remove(appointment);
+    }
+
+    /**
+     * Method that removes appointment based on index
+     * @param indexToRemove
+     */
+    public void removeAppointmentIndex(int indexToRemove) {
+        appointmentList.remove(indexToRemove);
     }
 
     @Override

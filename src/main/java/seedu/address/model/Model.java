@@ -84,4 +84,29 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /**
+     * Checks if appointment list has person
+     * @return True if appointment list has person
+     */
+    boolean hasAppointment(Appointment appointment);
+
+    /**
+     * Adds appointment to appointment list
+     * @param appointment Appointment to add (appointment must not already exist)
+     */
+    void addAppointment(Appointment appointment);
+
+    /**
+     * Removes appointment from appointment list
+     * @param appointment Appointment to remove must be present
+     */
+    void removeAppointment(Appointment appointment);
+
+    /**
+     * Removes appointment based on index.
+     * @param indexToRemove Index of appointment to remove
+     */
+    void removeAppointmentIndex(int indexToRemove);
+
 }
